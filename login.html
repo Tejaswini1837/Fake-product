@@ -1,0 +1,109 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #fff5f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            max-width: 600px; /* Limit the width of the container */
+            width: 100%; /* Make it responsive */
+        }
+
+        .login-form {
+            flex: 1; /* Take remaining space */
+            padding: 20px;
+        }
+
+        .login-image {
+            width: 250px; /* Increased image width */
+            border-radius: 10px 0 0 10px; /* Round the left corners */
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff3b30;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column; /* Stack elements on smaller screens */
+                align-items: center;
+            }
+
+            .login-image {
+                display: none; /* Hide image on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="login.png" alt="Login Illustration" class="login-image"> <!-- Replace with your actual image path -->
+        <div class="login-form">
+            <h2>Login</h2>
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button id="login-button">Login</button>
+            <p>Don't have an account? <a href="registration.html">Register here</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-button').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const response = await fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Login successful!');
+                localStorage.setItem('token', result.token); // Store token
+                window.location.href = 'index.html'; // Redirect to index.html
+            } else {
+                alert(result.message); // Show error message
+            }
+        });
+    </script>
+</body>
+</html>

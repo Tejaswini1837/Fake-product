@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Orders</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #fff5f4;
+        }
+        h1 {
+            text-align: center;
+            color: #ff6f61;
+        }
+        .order {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .order img {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        .order-info {
+            flex-grow: 1;
+        }
+        h2 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+        p {
+            margin: 5px 0;
+            color: #666;
+        }
+        h3 {
+            margin: 10px 0 5px;
+            color: #ff6f61;
+        }
+        #reviews {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        textarea {
+            width: 100%;
+            height: 60px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #e55d53;
+        }
+        .review {
+            margin-top: 5px;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        .sentiment {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Orders</h1>
+    <div id="orders"></div>
+
+    <script>
+        // Fetch orders from the server
+        fetch('http://localhost:5000/api/orders')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayOrders(data.orders);
+                } else {
+                    document.getElementById('orders').innerText = 'Failed to load orders.';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching orders:', error);
+                document.getElementById('orders').innerText = 'Error loading orders.';
+            });
+
+        // Function to display orders in the DOM
+        function displayOrders(orders) {
+            const ordersContainer = document.getElementById('orders');
+            if (orders.length === 0) {
+                ordersContainer.innerText = 'No orders found.';
+                return;
+            }
+            orders.forEach(order => {
+                const orderDiv = document.createElement('div');
+                orderDiv.className = 'order';
+                orderDiv.innerHTML = `
+                    <img src="${order.productImage}" alt="${order.productName}" />
+                    <div class="order-info">
+                        <h2>${order.productName}</h2>
+                        <p>Price: $${order.productPrice}</p>
+                        <p>Ordered by: ${order.name}</p>
+                        <p>Address: ${order.address}</p>
+                        <h3>Reviews:</h3>
+                        <div id="reviews-${order._id}">
+                            <div id="review-container-${order._id}"></div>
+                        </div>
+                        <textarea id="reviewText-${order._id}" placeholder="Write your review here..."></textarea>
+                        <button onclick="submitReview('${order._id}')">Submit Review</button>
+                    </div>
+                `;
+                ordersContainer.appendChild(orderDiv);
+
+                // Display existing reviews
+                displayReviews(order._id, order.reviews);
+            });
+        }
+
+        // Function to display reviews
+        function displayReviews(orderId, reviews) {
+            const reviewContainer = document.getElementById(`review-container-${orderId}`);
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'review';
+                reviewDiv.innerHTML = `
+                    <p>${review.reviewText} <span class="sentiment">(${review.sentiment})</span></p>
+                `;
+                reviewContainer.appendChild(reviewDiv);
+            });
+        }
+
+        // Function to submit a review
+        function submitReview(orderId) {
+            const reviewText = document.getElementById(`reviewText-${orderId}`).value;
+            fetch('http://localhost:5000/api/reviews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ orderId, reviewText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`reviewText-${orderId}`).value = ''; // Clear the text area
+                    // Update the review display
+                    const reviewContainer = document.getElementById(`review-container-${orderId}`);
+                    const reviewDiv = document.createElement('div');
+                    reviewDiv.className = 'review';
+                    reviewDiv.innerHTML = `
+                        <p>${reviewText} <span class="sentiment">(${data.sentiment})</span></p>
+                    `;
+                    reviewContainer.appendChild(reviewDiv);
+                } else {
+                    alert('Failed to submit review: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting review:', error);
+                alert('Error submitting review.');
+            });
+        }
+    </script>
+</body>
+</html>

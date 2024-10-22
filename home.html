@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spot the Sham</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff5f4; /* Matching background color */
+            line-height: 1.6;
+            color: #333; /* General text color */
+        }
+
+        header {
+            background-color: #ff6f61; /* Header color */
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff; /* Color for the navigation links */
+            text-decoration: none;
+            font-weight: bold; /* Bold links */
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ff3b30; /* Hover color */
+        }
+
+        .cta-button {
+            background-color: #ff6f61; /* Button color */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold; /* Bold button text */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Add transform on hover */
+        }
+
+        .cta-button:hover {
+            background-color: #ff3b30; /* Hover color for button */
+            transform: scale(1.05); /* Slightly increase size on hover */
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px auto;
+            background-color: #f8d1d1; /* Light background for sections */
+            border-radius: 8px;
+            max-width: 800px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            display: flex; /* Use flexbox for layout */
+            align-items: center; /* Center items vertically */
+        }
+
+        .section-content {
+            margin-left: 20px; /* Space between image and text */
+            flex-grow: 1; /* Allow content to take remaining space */
+        }
+
+        h2 {
+            text-align: left; /* Align headings to the left */
+            color: #333; /* Dark color for headings */
+            font-size: 1.8em; /* Increase font size */
+            margin-bottom: 10px; /* Space below heading */
+        }
+
+        p {
+            color: #444; /* Dark color for paragraph text */
+            font-size: 1em; /* Set a specific font size */
+            margin-bottom: 15px; /* Space below paragraphs */
+            text-align: left; /* Align text to the left */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background: #ff6f61;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: left; /* Align text in list items */
+        }
+
+        ul li:hover {
+            background: #d6d8db;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Increased gap for better spacing */
+        }
+
+        form input, form textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+            font-size: 1em; /* Set a specific font size */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Add shadow for input fields */
+        }
+
+        form input:focus, form textarea:focus {
+            border-color: #ff6f61; /* Focus color */
+            outline: none;
+        }
+
+        form button {
+            padding: 10px;
+            background-color: #ff6f61; /* Button color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold; /* Bold button text */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Add transform on hover */
+        }
+
+        form button:hover {
+            background-color: #ff3b30; /* Hover color for button */
+            transform: scale(1.05); /* Slightly increase size on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #ff6f61; /* Footer color */
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Added styles for images */
+        .section-image {
+            width: 250px; /* Increased width for About Us image */
+            height: auto; /* Maintain aspect ratio */
+            margin: 0 20px;
+            border-radius: 8px;
+            flex-shrink: 0; /* Prevent image from shrinking */
+        }
+
+        /* Centered features image */
+        .features-image {
+            width: 200px; /* Adjust width as needed */
+            display: block;
+            margin: 0 auto 20px; /* Center the image and add margin */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Spot the Sham</h1>
+        <nav>
+            <ul>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="login.html" class="nav-link">Login</a></li> <!-- Link to login.html -->
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about">
+        <img src="about.png" alt="About Us Image" class="section-image"> <!-- Replace with your actual image path -->
+        <div class="section-content">
+            <h2>About Us</h2>
+            <p>At Spot the Sham, we leverage advanced machine learning algorithms to identify fake reviews and enhance your shopping experience.</p>
+        </div>
+    </section>
+
+    <section id="features">
+        <img src="feature.png" alt="Features Image" class="features-image"> <!-- Replace with your actual image path -->
+        <div class="section-content">
+            <h2>Features</h2>
+            <ul>
+                <li>Real-time Review Analysis</li>
+                <li>IP Address Tracking</li>
+                <li>User-friendly Interface</li>
+                <li>Detailed Reporting</li>
+                <li>Community Feedback</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="contact">
+        <img src="contact.png" alt="Contact Us Image" class="section-image"> <!-- Replace with your actual image path -->
+        <div class="section-content">
+            <h2>Contact Us</h2>
+            <p>If you have any questions, feel free to reach out!</p>
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Spot the Sham. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
